@@ -5,6 +5,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this
 project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.2.2] - 2026-03-01
+
+### Added
+
+- Support for Python 3.14, including the free-threaded (3.14t) build. (#)
+
+### Changed
+
+- The `dotenv run` command now forwards flags directly to the specified command by [@bbc2] in [#607]
+- Improved documentation clarity regarding override behavior and the reference page.
+- Updated PyPy support to version 3.11.
+- Documentation for FIFO file support.
+- Dropped Support for Python 3.9.
+
+### Fixed
+
+- Improved `set_key` and `unset_key` behavior when interacting with symlinks by [@bbc2] in [#790c5](https://github.com/theskumar/python-dotenv/commit/790c5c02991100aa1bf41ee5330aca75edc51311)
+- Corrected the license specifier and added missing Python 3.14 classifiers in package metadata by [@JYOuyang] in [#590]
+
+### Breaking Changes
+
+- `dotenv.set_key` and `dotenv.unset_key` used to follow symlinks in some
+  situations. This is no longer the case. For that behavior to be restored in
+  all cases, `follow_symlinks=True` should be used.
+
+- In the CLI, `set` and `unset` used to follow symlinks in some situations. This
+  is no longer the case.
+
+- `dotenv.set_key`, `dotenv.unset_key` and the CLI commands `set` and `unset`
+  used to reset the file mode of the modified .env file to `0o600` in some
+  situations. This is no longer the case: The original mode of the file is now
+  preserved. Is the file needed to be created or wasn't a regular file, mode
+  `0o600` is used.
+
 ## [1.2.1] - 2025-10-26
 
 - Move more config to `pyproject.toml`, removed `setup.cfg`
@@ -20,9 +54,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
-* CLI: Ensure `find_dotenv` work reliably on python 3.13 by [@theskumar] in [#563](https://github.com/theskumar/python-dotenv/pull/563)
-* CLI: revert the use of execvpe on Windows by [@wrongontheinternet] in [#566](https://github.com/theskumar/python-dotenv/pull/566)
-
+- CLI: Ensure `find_dotenv` work reliably on python 3.13 by [@theskumar] in [#563](https://github.com/theskumar/python-dotenv/pull/563)
+- CLI: revert the use of execvpe on Windows by [@wrongontheinternet] in [#566](https://github.com/theskumar/python-dotenv/pull/566)
 
 ## [1.1.0] - 2025-03-25
 
@@ -43,56 +76,56 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 **Fixed**
 
-* Gracefully handle code which has been imported from a zipfile ([#456] by [@samwyma])
-* Allow modules using `load_dotenv` to be reloaded when launched in a separate thread ([#497] by [@freddyaboulton])
-* Fix file not closed after deletion, handle error in the rewrite function ([#469] by [@Qwerty-133])
+- Gracefully handle code which has been imported from a zipfile ([#456] by [@samwyma])
+- Allow modules using `load_dotenv` to be reloaded when launched in a separate thread ([#497] by [@freddyaboulton])
+- Fix file not closed after deletion, handle error in the rewrite function ([#469] by [@Qwerty-133])
 
 **Misc**
-* Use pathlib.Path in tests ([#466] by [@eumiro])
-* Fix year in release date in changelog.md ([#454] by [@jankislinger])
-* Use https in README links ([#474] by [@Nicals])
+
+- Use pathlib.Path in tests ([#466] by [@eumiro])
+- Fix year in release date in changelog.md ([#454] by [@jankislinger])
+- Use https in README links ([#474] by [@Nicals])
 
 ## [1.0.0] - 2023-02-24
 
 **Fixed**
 
-* Drop support for python 3.7, add python 3.12-dev (#449 by [@theskumar])
-* Handle situations where the cwd does not exist. (#446 by [@jctanner])
+- Drop support for python 3.7, add python 3.12-dev (#449 by [@theskumar])
+- Handle situations where the cwd does not exist. (#446 by [@jctanner])
 
 ## [0.21.1] - 2023-01-21
 
 **Added**
 
-* Use Python 3.11 non-beta in CI (#438 by [@bbc2])
-* Modernize variables code (#434 by [@Nougat-Waffle])
-* Modernize main.py and parser.py code (#435 by [@Nougat-Waffle])
-* Improve conciseness of cli.py and __init__.py (#439 by [@Nougat-Waffle])
-* Improve error message for `get` and `list` commands when env file can't be opened (#441 by [@bbc2])
-* Updated License to align with BSD OSI template (#433 by [@lsmith77])
-
+- Use Python 3.11 non-beta in CI (#438 by [@bbc2])
+- Modernize variables code (#434 by [@Nougat-Waffle])
+- Modernize main.py and parser.py code (#435 by [@Nougat-Waffle])
+- Improve conciseness of cli.py and **init**.py (#439 by [@Nougat-Waffle])
+- Improve error message for `get` and `list` commands when env file can't be opened (#441 by [@bbc2])
+- Updated License to align with BSD OSI template (#433 by [@lsmith77])
 
 **Fixed**
 
-* Fix Out-of-scope error when "dest" variable is undefined (#413 by [@theGOTOguy])
-* Fix IPython test warning about deprecated `magic` (#440 by [@bbc2])
-* Fix type hint for dotenv_path var, add StrPath alias (#432 by [@eaf])
+- Fix Out-of-scope error when "dest" variable is undefined (#413 by [@theGOTOguy])
+- Fix IPython test warning about deprecated `magic` (#440 by [@bbc2])
+- Fix type hint for dotenv_path var, add StrPath alias (#432 by [@eaf])
 
 ## [0.21.0] - 2022-09-03
 
 **Added**
 
-* CLI: add support for invocations via 'python -m'. (#395 by [@theskumar])
-* `load_dotenv` function now returns `False`. (#388 by [@larsks])
-* CLI: add --format= option to list command. (#407 by [@sammck])
+- CLI: add support for invocations via 'python -m'. (#395 by [@theskumar])
+- `load_dotenv` function now returns `False`. (#388 by [@larsks])
+- CLI: add --format= option to list command. (#407 by [@sammck])
 
 **Fixed**
 
-* Drop Python 3.5 and 3.6 and upgrade GA (#393 by [@eggplants])
-* Use `open` instead of `io.open`. (#389 by [@rabinadk1])
-* Improve documentation for variables without a value (#390 by [@bbc2])
-* Add `parse_it` to Related Projects (#410 by [@naorlivne])
-* Update README.md (#415 by [@harveer07])
-* Improve documentation with direct use of MkDocs (#398 by [@bbc2])
+- Drop Python 3.5 and 3.6 and upgrade GA (#393 by [@eggplants])
+- Use `open` instead of `io.open`. (#389 by [@rabinadk1])
+- Improve documentation for variables without a value (#390 by [@bbc2])
+- Add `parse_it` to Related Projects (#410 by [@naorlivne])
+- Update README.md (#415 by [@harveer07])
+- Improve documentation with direct use of MkDocs (#398 by [@bbc2])
 
 ## [0.20.0] - 2022-03-24
 
@@ -124,16 +157,16 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 **Changed**
 
-- Require Python 3.5 or a later version.  Python 2 and 3.4 are no longer supported. (#341
+- Require Python 3.5 or a later version. Python 2 and 3.4 are no longer supported. (#341
   by [@bbc2]).
 
 **Added**
 
 - The `dotenv_path` argument of `set_key` and `unset_key` now has a type of `Union[str,
-  os.PathLike]` instead of just `os.PathLike` (#347 by [@bbc2]).
+os.PathLike]` instead of just `os.PathLike` (#347 by [@bbc2]).
 - The `stream` argument of `load_dotenv` and `dotenv_values` can now be a text stream
   (`IO[str]`), which includes values like `io.StringIO("foo")` and `open("file.env",
-  "r")` (#348 by [@bbc2]).
+"r")` (#348 by [@bbc2]).
 
 ## [0.18.0] - 2021-06-20
 
@@ -271,6 +304,7 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Fix Unicode error in Python 2, introduced in 0.10.0. ([@bbc2])([#176])
 
 ## 0.10.1
+
 - Fix parsing of variable without a value ([@asyncee])([@bbc2])([#158])
 
 ## 0.10.0
@@ -283,7 +317,6 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Drop Python 3.3 support ([@greyli])
 - Fix stderr/-out/-in redirection ([@venthur])
 
-
 ## 0.9.0
 
 - Add `--version` parameter to cli ([@venthur])
@@ -292,81 +325,82 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## 0.8.1
 
--   Add tests for docs ([@Flimm])
--   Make 'cli' support optional. Use `pip install python-dotenv[cli]`. ([@theskumar])
+- Add tests for docs ([@Flimm])
+- Make 'cli' support optional. Use `pip install python-dotenv[cli]`. ([@theskumar])
 
 ## 0.8.0
 
--   `set_key` and `unset_key` only modified the affected file instead of
-    parsing and re-writing file, this causes comments and other file
-    entact as it is.
--   Add support for `export` prefix in the line.
--   Internal refractoring ([@theskumar])
--   Allow `load_dotenv` and `dotenv_values` to work with `StringIO())` ([@alanjds])([@theskumar])([#78])
+- `set_key` and `unset_key` only modified the affected file instead of
+  parsing and re-writing file, this causes comments and other file
+  entact as it is.
+- Add support for `export` prefix in the line.
+- Internal refractoring ([@theskumar])
+- Allow `load_dotenv` and `dotenv_values` to work with `StringIO())` ([@alanjds])([@theskumar])([#78])
 
 ## 0.7.1
 
--   Remove hard dependency on iPython ([@theskumar])
+- Remove hard dependency on iPython ([@theskumar])
 
 ## 0.7.0
 
--   Add support to override system environment variable via .env.
-    ([@milonimrod](https://github.com/milonimrod))
-    ([\#63](https://github.com/theskumar/python-dotenv/issues/63))
--   Disable ".env not found" warning by default
-    ([@maxkoryukov](https://github.com/maxkoryukov))
-    ([\#57](https://github.com/theskumar/python-dotenv/issues/57))
+- Add support to override system environment variable via .env.
+  ([@milonimrod](https://github.com/milonimrod))
+  ([\#63](https://github.com/theskumar/python-dotenv/issues/63))
+- Disable ".env not found" warning by default
+  ([@maxkoryukov](https://github.com/maxkoryukov))
+  ([\#57](https://github.com/theskumar/python-dotenv/issues/57))
 
 ## 0.6.5
 
--   Add support for special characters `\`.
-    ([@pjona](https://github.com/pjona))
-    ([\#60](https://github.com/theskumar/python-dotenv/issues/60))
+- Add support for special characters `\`.
+  ([@pjona](https://github.com/pjona))
+  ([\#60](https://github.com/theskumar/python-dotenv/issues/60))
 
 ## 0.6.4
 
--   Fix issue with single quotes ([@Flimm])
-    ([\#52](https://github.com/theskumar/python-dotenv/issues/52))
+- Fix issue with single quotes ([@Flimm])
+  ([\#52](https://github.com/theskumar/python-dotenv/issues/52))
 
 ## 0.6.3
 
--   Handle unicode exception in setup.py
-    ([\#46](https://github.com/theskumar/python-dotenv/issues/46))
+- Handle unicode exception in setup.py
+  ([\#46](https://github.com/theskumar/python-dotenv/issues/46))
 
 ## 0.6.2
 
--   Fix dotenv list command ([@ticosax](https://github.com/ticosax))
--   Add iPython Support
-    ([@tillahoffmann](https://github.com/tillahoffmann))
+- Fix dotenv list command ([@ticosax](https://github.com/ticosax))
+- Add iPython Support
+  ([@tillahoffmann](https://github.com/tillahoffmann))
 
 ## 0.6.0
 
--   Drop support for Python 2.6
--   Handle escaped characters and newlines in quoted values. (Thanks
-    [@iameugenejo](https://github.com/iameugenejo))
--   Remove any spaces around unquoted key/value. (Thanks
-    [@paulochf](https://github.com/paulochf))
--   Added POSIX variable expansion. (Thanks
-    [@hugochinchilla](https://github.com/hugochinchilla))
+- Drop support for Python 2.6
+- Handle escaped characters and newlines in quoted values. (Thanks
+  [@iameugenejo](https://github.com/iameugenejo))
+- Remove any spaces around unquoted key/value. (Thanks
+  [@paulochf](https://github.com/paulochf))
+- Added POSIX variable expansion. (Thanks
+  [@hugochinchilla](https://github.com/hugochinchilla))
 
 ## 0.5.1
 
--   Fix `find_dotenv` - it now start search from the file where this
-    function is called from.
+- Fix `find_dotenv` - it now start search from the file where this
+  function is called from.
 
 ## 0.5.0
 
--   Add `find_dotenv` method that will try to find a `.env` file.
-    (Thanks [@isms](https://github.com/isms))
+- Add `find_dotenv` method that will try to find a `.env` file.
+  (Thanks [@isms](https://github.com/isms))
 
 ## 0.4.0
 
--   cli: Added `-q/--quote` option to control the behaviour of quotes
-    around values in `.env`. (Thanks
-    [@hugochinchilla](https://github.com/hugochinchilla)).
--   Improved test coverage.
+- cli: Added `-q/--quote` option to control the behaviour of quotes
+  around values in `.env`. (Thanks
+  [@hugochinchilla](https://github.com/hugochinchilla)).
+- Improved test coverage.
 
 <!-- PR LINKS -->
+
 [#78]: https://github.com/theskumar/python-dotenv/issues/78
 [#121]: https://github.com/theskumar/python-dotenv/issues/121
 [#148]: https://github.com/theskumar/python-dotenv/issues/148
@@ -386,8 +420,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 [#569]: https://github.com/theskumar/python-dotenv/issues/569
 [#583]: https://github.com/theskumar/python-dotenv/issues/583
 [#586]: https://github.com/theskumar/python-dotenv/issues/586
+[#590]: https://github.com/theskumar/python-dotenv/issues/590
+[#607]: https://github.com/theskumar/python-dotenv/issues/607
 
 <!-- contributors -->
+
 [@23f3001135]: https://github.com/23f3001135
 [@EpicWink]: https://github.com/EpicWink
 [@Flimm]: https://github.com/Flimm
@@ -437,8 +474,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 [@x-yuri]: https://github.com/x-yuri
 [@yannham]: https://github.com/yannham
 [@zueve]: https://github.com/zueve
-
-[Unreleased]: https://github.com/theskumar/python-dotenv/compare/v1.2.0...HEAD
+[@JYOuyang]: https://github.com/JYOuyang
+[@burnout-projects]: https://github.com/burnout-projects
+[@cpackham-atlnz]: https://github.com/cpackham-atlnz
+[Unreleased]: https://github.com/theskumar/python-dotenv/compare/v1.2.2...HEAD
+[1.2.2]: https://github.com/theskumar/python-dotenv/compare/v1.2.1...v1.2.2
+[1.2.1]: https://github.com/theskumar/python-dotenv/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/theskumar/python-dotenv/compare/v1.1.1...v1.2.0
 [1.1.1]: https://github.com/theskumar/python-dotenv/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/theskumar/python-dotenv/compare/v1.0.1...v1.1.0
